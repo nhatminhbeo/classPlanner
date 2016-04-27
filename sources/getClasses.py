@@ -13,7 +13,7 @@ cdep = tree.xpath( "//p[@class=\"course-descriptions\"]/text() | //p[@class=\"co
 classes = {}
 
 for i in range(len(cname)):
-	classes[cname[i]] = cdep[i:i+2]
+	classes[cname[i]] = cdep[i:i+3]
 
 
 f = open('result', 'r+')
