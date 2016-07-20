@@ -25,8 +25,10 @@ with open('url2') as urlfile:
 		#print ids
 
 		cname = tree.xpath( "//p[@class=\"course-name\"]/text() | //p[@class=\"course-name\"]/descendant::*/text()" )
-		cdep = tree.xpath( "//p[@class=\"course-descriptions\"]/text() | //p[@class=\"course-descriptions\"]/descendant::*/text()" )
-
+		#cdep = tree.xpath( "//p[@class=\"course-descriptions\"]/text()" )
+		pattern = r'course-descriptions\">(.*?)<\/p'
+		cdep = re.findall(pattern, page.content)
+		#print(cdep)
 		#print cname
 		#print cdep[:30]
 		final = []
@@ -39,6 +41,10 @@ with open('url2') as urlfile:
 			while "  " in cname[item]:
 				cname[item] = re.sub('  ', ' ', cname[item])
 			f.write (cname[item].encode("utf-8"))
+			f.write('\n')
+			f.write(cdep[item].encode("utf-8"))
+			f.write('\n')
+			f.write('\n')
 			f.write('\n')
 		f.write('\n')
 f.close()
