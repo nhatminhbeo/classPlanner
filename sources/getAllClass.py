@@ -15,6 +15,7 @@ with open('url') as urlfile:
 
 		url = url.strip()
 		f.write(url)
+		f.write('\n')
 		page = requests.get(url)
 		tree = html.fromstring(page.content)
 		#subject = tree.xpath( "//h1[@class=\"noTopMargin\"]/text()")
