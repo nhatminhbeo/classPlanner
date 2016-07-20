@@ -8,7 +8,7 @@ import re
 
 f = open('final_res', 'r+')
 
-with open('url') as urlfile:
+with open('url2') as urlfile:
 	for line in urlfile:
 		url = "http://ucsd.edu/catalog/courses/"+line
 		#url = "http://ucsd.edu/catalog/courses/CSE.html"
