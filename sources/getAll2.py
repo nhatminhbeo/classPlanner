@@ -43,7 +43,7 @@ with open('url2') as urlfile:
 				else:
 					ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 					if (ccodee != None):
-						dict["code"] = ccode.encode("utf-8")
+						dict["code"] = ccodee.group().encode("utf-8")
 						f.write(ccodee.group().encode("utf-8"))
 						f.write("\n")
 
