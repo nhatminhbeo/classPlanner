@@ -89,10 +89,10 @@ with open('url2') as urlfile:
 
 	
 for dict in list:
-	dict["unit"] = ''.join(i for i in dict["unit"] if ord(i)<128)
-	dict["title"] = ''.join(i for i in dict["title"] if ord(i)<128)
-	dict["code"] = ''.join(i for i in dict["code"] if ord(i)<128)
-	dict["description"] = ''.join(i for i in dict["description"] if ord(i)<128)
+	dict["unit"] = "".join(i for i in dict["unit"] if ord(i)<128)
+	dict["title"] = "".join(i for i in dict["title"] if ord(i)<128)
+	dict["code"] = "".join(i for i in dict["code"] if ord(i)<128)
+	dict["description"] = "".join(i for i in dict["description"] if ord(i)<128)
 js = open ("final_res.json", "r+")
 json.dump(list,js)
 js.close()			
