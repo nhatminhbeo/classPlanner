@@ -28,7 +28,13 @@ with open('url2') as urlfile:
 			f.write("\n")
 
 			cdepe = cnamee.find_next("p")
-			f.write(cdepe.text.encode("utf-8"))
+			cdep = cdepe.text
+			cdep = cdep.strip(' \t\n\r ')
+                        while "  " in cdep:
+                                cdep = re.sub('  ', ' ', cdep)
+			while (re.search('[\t\n\r]', cdep) != None):
+				cdep = re.sub('[\t\n\r]', '', cdep)
+			f.write(cdep.encode("utf-8"))
 			f.write("\n\n")
 			
 f.close()
