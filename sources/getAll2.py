@@ -37,13 +37,13 @@ with open('url2') as urlfile:
 						ccode = ccode[:char] + " " + ccode[char:]
 						break
 				if (ccode.upper() in cnamee.text.upper()) or len(ccode)<=9:
-					dict["code"] = re.sub('\u2014','-',ccode)
+					dict["code"] = re.sub(u'\u2014','-',ccode)
 					f.write(ccode.encode("utf-8"))
 					f.write("\n")
 				else:
 					ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 					if (ccodee != None):
-						dict["code"] = re.sub('\u2014','-',ccodee.group())
+						dict["code"] = re.sub(u'\u2014','-',ccodee.group())
 						f.write(ccodee.group().encode("utf-8"))
 						f.write("\n")
 
@@ -51,7 +51,7 @@ with open('url2') as urlfile:
 			else:
 				ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 				if (ccodee != None):
-					dict["code"] = re.sub('\u2014', '-', ccodee.group())
+					dict["code"] = re.sub(u'\u2014', '-', ccodee.group())
 					f.write(ccodee.group().encode("utf-8"))
 					f.write("\n")
 
@@ -69,7 +69,7 @@ with open('url2') as urlfile:
                         cname = re.sub('[\t\n\r]', '', cname)
                         while "  " in cname:
                                 cname = re.sub('  ', ' ', cname)
-			dict["title"] = re.sub('\u2014','-',cname)
+			dict["title"] = re.sub(u'\u2014','-',cname)
 			f.write(cname.encode("utf-8"))
 			f.write("\n")
 
@@ -81,7 +81,7 @@ with open('url2') as urlfile:
                                 cdep = re.sub('  ', ' ', cdep)
 			while (re.search('[\t\n\r]', cdep) != None):
 				cdep = re.sub('[\t\n\r]', '', cdep)
-			dict["description"] = re.sub('\u2014','-',cdep)
+			dict["description"] = re.sub(u'\u2014','-',cdep)
 			f.write(cdep.encode("utf-8"))
 			f.write("\n\n")
 
