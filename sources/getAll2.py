@@ -43,7 +43,7 @@ with open('url2') as urlfile:
 				else:
 					ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 					if (ccodee != None):
-						dict["code"] = ccodee.group().encode("utf-8")
+						dict["code"] = ccodee.group()
 						f.write(ccodee.group().encode("utf-8"))
 						f.write("\n")
 
@@ -51,7 +51,7 @@ with open('url2') as urlfile:
 			else:
 				ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 				if (ccodee != None):
-					dict["code"] = ccodee.group().encode("utf-8")
+					dict["code"] = ccodee.group()
 					f.write(ccodee.group().encode("utf-8"))
 					f.write("\n")
 
@@ -59,7 +59,7 @@ with open('url2') as urlfile:
 			openindex = cnamee.text.rfind('(')
 			if (openindex != -1):
 				cunit = cnamee.text[openindex:]
-				dict["unit"] = cunit.encode("utf-8")
+				dict["unit"] = cunit
 				f.write(cunit.encode("utf-8"))
 				f.write("\n")
 
@@ -69,7 +69,7 @@ with open('url2') as urlfile:
                         cname = re.sub('[\t\n\r]', '', cname)
                         while "  " in cname:
                                 cname = re.sub('  ', ' ', cname)
-			dict["title"] = cname.encode("utf-8")
+			dict["title"] = cname
 			f.write(cname.encode("utf-8"))
 			f.write("\n")
 
@@ -81,14 +81,18 @@ with open('url2') as urlfile:
                                 cdep = re.sub('  ', ' ', cdep)
 			while (re.search('[\t\n\r]', cdep) != None):
 				cdep = re.sub('[\t\n\r]', '', cdep)
-			dict["description"] = cdep.encode("utf-8")
+			dict["description"] = cdep
 			f.write(cdep.encode("utf-8"))
 			f.write("\n\n")
 
 			list.append(dict)
 
 	
-
+for dict in list:
+	dict["unit"] = ''.join(i for i in dict["unit"] if ord(i)<128)
+	dict["title"] = ''.join(i for i in dict["title"] if ord(i)<128)
+	dict["code"] = ''.join(i for i in dict["code"] if ord(i)<128)
+	dict["description"] = ''.join(i for i in dict["description"] if ord(i)<128)
 js = open ("final_res.json", "r+")
 json.dump(list,js)
 js.close()			
