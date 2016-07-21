@@ -8,9 +8,10 @@ from bs4 import BeautifulSoup
 
 
 f = open('final_res2', 'r+')
-
+list = []
 with open('url2') as urlfile:
 	for line in urlfile:
+
 		url = "http://ucsd.edu/catalog/courses/"+line
 		url = url.strip()
 		#print(url)
@@ -19,6 +20,8 @@ with open('url2') as urlfile:
 		page = requests.get(url)
 		soup = BeautifulSoup(page.content, 'lxml')
 		for cnamee in soup.find_all("p", class_='course-name'):
+
+			dict = { "code":"", "unit":"", "title":"", "description":"" }
 
 			#### SKIP EDGE CASE OF BLANK <p class="course-name> ####
 			a = re.search(r"[a-zA-Z0-9]", cnamee.text.encode("utf-8"))
@@ -34,11 +37,13 @@ with open('url2') as urlfile:
 						ccode = ccode[:char] + " " + ccode[char:]
 						break
 				if (ccode.upper() in cnamee.text.upper()) or len(ccode)<=9:
+					dict["code"] = ccode.encode("utf-8")
 					f.write(ccode.encode("utf-8"))
 					f.write("\n")
 				else:
 					ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 					if (ccodee != None):
+						dict["code"] = ccode.encode("utf-8")
 						f.write(ccodee.group().encode("utf-8"))
 						f.write("\n")
 
@@ -46,6 +51,7 @@ with open('url2') as urlfile:
 			else:
 				ccodee = re.search(r"[a-zA-Z]+ [0-9A-Z]+", cnamee.text.encode("utf-8"))
 				if (ccodee != None):
+					dict["code"] = ccodee.group().encode("utf-8")
 					f.write(ccodee.group().encode("utf-8"))
 					f.write("\n")
 
@@ -53,6 +59,7 @@ with open('url2') as urlfile:
 			openindex = cnamee.text.rfind('(')
 			if (openindex != -1):
 				cunit = cnamee.text[openindex:]
+				dict["unit"] = cunit.encode("utf-8")
 				f.write(cunit.encode("utf-8"))
 				f.write("\n")
 
@@ -62,6 +69,7 @@ with open('url2') as urlfile:
                         cname = re.sub('[\t\n\r]', '', cname)
                         while "  " in cname:
                                 cname = re.sub('  ', ' ', cname)
+			dict["title"] = cname.encode("utf-8")
 			f.write(cname.encode("utf-8"))
 			f.write("\n")
 
@@ -73,8 +81,16 @@ with open('url2') as urlfile:
                                 cdep = re.sub('  ', ' ', cdep)
 			while (re.search('[\t\n\r]', cdep) != None):
 				cdep = re.sub('[\t\n\r]', '', cdep)
+			dict["description"] = cdep.encode("utf-8")
 			f.write(cdep.encode("utf-8"))
 			f.write("\n\n")
-			
+
+			list.append(dict)
+
+	
+
+js = open ("final_res.json", "r+")
+json.dump(list,js)
+js.close()			
 f.close()
 
