@@ -5,6 +5,12 @@ from bs4 import BeautifulSoup
 import sys
 import requests
 
+## FUNCTION TO MAKE CONTENTS READABLE
+def makePretty(search):
+	result = "".join(i for i in search.text if ord(i)<128)
+	result = result.rstrip().strip()
+	return result
+
 ## READ IN JSON CLASS FILE
 data = open("classes.json").read()
 data = json.loads(data)
@@ -19,7 +25,7 @@ masterURL = "http://cape.ucsd.edu/responses/Results.aspx?Name=&CourseNumber="
 i = 0
 
 ## ITERATE THROUGH EACH CLASS
-for entry in data:
+for entry in data[:500]:
 
 	## DEBUG MESSAGE TO WATCH WHILE WAITING FIKING HOURS
 	i = i + 1
