@@ -7,9 +7,9 @@ import re
 from bs4 import BeautifulSoup
 
 
-f = open('final_res2', 'r+')
+f = open('classes.data', 'r+')
 list = []
-with open('url2') as urlfile:
+with open('url.data') as urlfile:
 	for line in urlfile:
 
 		url = "http://ucsd.edu/catalog/courses/"+line
@@ -93,7 +93,8 @@ for dict in list:
 	dict["title"] = "".join(i for i in dict["title"] if ord(i)<128)
 	dict["code"] = "".join(i for i in dict["code"] if ord(i)<128)
 	dict["description"] = "".join(i for i in dict["description"] if ord(i)<128)
-js = open ("final_res.json", "r+")
+
+js = open ("classes.json", "r+")
 json.dump(list,js)
 js.close()			
 f.close()

@@ -7,7 +7,7 @@ import re
 page = requests.get('http://ucsd.edu/catalog/front/courses.html')
 #tree = html.fromstring(page.content)
 
-f = open('url2', 'r+')
+f = open('url.data', 'r+')
 pattern = r'courses/(.*?).html'
 content = page.content
 
