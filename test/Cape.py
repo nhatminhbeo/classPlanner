@@ -4,18 +4,24 @@ import lxml
 from bs4 import BeautifulSoup
 import sys
 import requests
+import time
+
 
 def makePretty(search):
 	result = "".join(i for i in search.text if ord(i)<128)
-	result.rstrip().strip()
+	result = result.rstrip().strip()
 	return result
+
 
 url = "http://cape.ucsd.edu/responses/Results.aspx?Name=&CourseNumber=CSE+12"
 user_agent = {'User-agent': 'Mozilla/5.0'}
+startTime = time.time()
 result = requests.get(url, headers=user_agent)
+time1 = time.time()
+print ("connection time: " + str(time1-startTime))
 soup = BeautifulSoup(result.content, 'lxml')
 found = (soup.find_all("tr", class_=re.compile(r"(odd|even)")))
-print len(found)
+##print len(found)
 count = 0
 for section in found:
 	
@@ -44,7 +50,7 @@ for section in found:
 
 	## RECONMMEND CLASS
 	rClass = cSubmitted.find_next("span")
-	recommenClass = makePretty(rClass)
+	recommendClass = makePretty(rClass)
 
 	## RECOMMEND INSTR
 	rInstr = rClass.find_next("span")
@@ -55,24 +61,25 @@ for section in found:
 	studyHours = makePretty(sHours)
 
 	## AVERAGE GRADE EXPECTED
-	avgExpected = sHousr.find_next("span")
+	avgExpected = sHours.find_next("span")
 	averageExpected = makePretty(avgExpected)
 
 	## AVERAGE GRADE RECEIVED
-	avgReceived = sHousr.find_next("span")
+	avgReceived = avgExpected.find_next("span")
 	averageReceived = makePretty(avgReceived)
 
 	count = count + 1
-	print (instrName)
-	print (className)
-	print (classTerm)
-	print (classEnroll)
-	print (classSubmitted)
-	print (recommendClass)
-	print (recommendInstr)
-	print (studyHours)
-	print (averageExpected)
-	print (averageReceived)
-	print ("\n")
-
-print (count)
+##	print (instrName)
+##	print (className)
+##	print (classTerm)
+##	print (classEnroll)
+##	print (classSubmitted)
+##	print (recommendClass)
+##	print (recommendInstr)
+##	print (studyHours)
+##	print (averageExpected)
+##	print (averageReceived)
+##	print ("\n")
+time2 = time.time()
+print ("Processing time: " + str(time2-time1))
+##print (count)
