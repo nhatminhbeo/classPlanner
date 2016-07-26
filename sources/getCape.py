@@ -25,12 +25,16 @@ masterURL = "http://cape.ucsd.edu/responses/Results.aspx?Name=&CourseNumber="
 i = 0
 
 ## ITERATE THROUGH EACH CLASS
-for entry in data[:500]:
+for entry in data:
 
+	#if (i>10):
+	#	break
 	## DEBUG MESSAGE TO WATCH WHILE WAITING FIKING HOURS
 	i = i + 1
-	print(str(i)+ " out of " + str(len(data)))
-	
+	debug = open("cape.process", "a")
+	debug.write(str(i)+ " out of " + str(len(data)) + "\n")
+	debug.close()
+
 	## DATA HOLDER
 	sections = []
 	res[entry["code"].upper()] = sections
@@ -103,7 +107,7 @@ for entry in data[:500]:
 		current["averageExpected"] = averageExpected
 		current["averageReceived"] = averageReceived
 		sections.append(current)
-
+#print(res)
 f = open("cape.json", "r+")
-json.dumps(res, f)
-close(f)
+json.dump(res, f)
+f.close()
