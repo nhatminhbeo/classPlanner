@@ -58,7 +58,7 @@ for entry in data:
 		## CHECK IF CORRECT CLAS
 		cName = iName.find_next("td")
 		className = makePretty(cName)
-		if (entry["code"].upper()+" ") not in className:
+		if (not className.startswith(entry["code"].upper()+" ")):
 			#print(className + " does not match " + "CSE 12")
 			continue
 
